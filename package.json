@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed:users": "node ./seeds/user.seed.js",
+    "seed:cars": "node ./seeds/car.seed.js",
     "start": "node --watch index.js",
     "lint": "eslint",
     "prepare": "husky install"

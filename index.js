@@ -1,5 +1,6 @@
 const express = require("express");
 const { userRouter } = require("./routes/user.routes.js");
+const { carRouter } = require("./routes/car.routes.js");
 
 // Conexión a la BBDD
 const { connect } = require("./db.js");
@@ -22,6 +23,7 @@ router.get("*", (req, res) => {
 
 // Usamos las rutas
 server.use("/user", userRouter);
+server.use("/car", carRouter);
 server.use("/", router);
 
 server.listen(PORT, () => {
