@@ -1,23 +1,23 @@
 const mongoose = require("mongoose");
 const { connect } = require("../db.js");
 const { User } = require("../models/User.js");
+const { faker } = require("@faker-js/faker");
 
 const userList = [
-  {
-    firstName: "Fran",
-    lastName: "Linde",
-    phone: 123123123,
-  },
-  {
-    firstName: "Edu",
-    lastName: "Cuadrado",
-  },
-  {
-    firstName: "Gon",
-    lastName: "Fernández",
-    phone: 666777888,
-  },
+  { firstName: "Fran", lastName: "Linde", phone: "123123123" },
+  { firstName: "Edu", lastName: "Cuadrado" },
+  { firstName: "Gon", lastName: "Fernández", phone: "666777888" },
 ];
+
+// Creamos usuarios adicionales
+for (let i = 0; i < 50; i++) {
+  const newUser = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    phone: faker.phone.number("+34 91 ### ## ##"),
+  };
+  userList.push(newUser);
+}
 
 connect().then(() => {
   console.log("Tenemos conexión");

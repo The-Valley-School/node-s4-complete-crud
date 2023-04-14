@@ -7,10 +7,32 @@ const { User } = require("../models/User.js");
 const router = express.Router();
 
 // CRUD: READ
+// EJEMPLO DE REQ: http://localhost:3000/user?page=1&limit=10
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find();
-    res.json(users);
+    // Asi leemos query params
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const users = await User.find()
+      .limit(limit)
+      .skip((page - 1) * limit);
+
+    // LIMIT 10, PAGE 1 -> SKIP = 0
+    // LIMIT 10, PAGE 2 -> SKIP = 10
+    // LIMIT 10, PAGE 3 -> SKIP = 20
+    // ...
+
+    // Num total de elementos
+    const totalElements = await User.countDocuments();
+
+    const response = {
+      totalItems: totalElements,
+      totalPages: Math.ceil(totalElements / limit),
+      currentPage: page,
+      data: users,
+    };
+
+    res.json(response);
   } catch (error) {
     res.status(500).json(error);
   }
